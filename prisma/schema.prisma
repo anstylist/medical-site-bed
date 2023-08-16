@@ -13,16 +13,17 @@ datasource db {
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
-  firstName String
-  lastName  String
+  fullName  String
   password  String
-  isActive  Boolean  @default(false)
-  avatar    String?
+  status    Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   //Relations
-  roles UserRole[]
+  roles     UserRole[]
+  orders    Order[]
+  doctor    Doctor?
+  patient   Patient?
 }
 
 model Role {
@@ -31,14 +32,12 @@ model Role {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  //Relations
-  users UserRole[]
+  users     UserRole[]
 }
 
 model UserRole {
   id String @id @default(cuid())
 
-  //Relations
   User   User   @relation(fields: [userId], references: [id])
   userId String
   Role   Role   @relation(fields: [roleId], references: [id])
@@ -49,17 +48,106 @@ model Product {
   id          String   @id @default(cuid())
   name        String
   description String
+  code        String
+  image       String
+  category    String
   price       Int
-  stock       Int?
-  reviews     Review[]
+  stock       Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  orders ProductOrder[]
 }
 
-model Review {
-  id        String  @id @default(cuid())
-  text      String
-  rating    Int
-  product   Product @relation(fields: [productId], references: [id])
-  productId String
+model Order {
+  id          String   @id @default(cuid())
+  image       String
+  category    String
+  price       Int
+  stock       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  products    ProductOrder[]
 }
+
+model ProductOrder {
+  id          String   @id @default(cuid())
+  quantity    Int
+  price       Int
+
+  product     Product     @relation(fields: [productId], references: [id])
+  productId   String
+  order       Order     @relation(fields: [orderId], references: [id])
+  orderId     String 
+}
+
+model Patient {
+  id          String   @id @default(cuid())
+  rh          String
+  gender      Genders
+  birthDate   DateTime
+  phone       String
+  nationality String
+
+  appointments  Appointment[]
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String   @unique
+}
+enum Genders {
+  FEMALE
+  MALE
+}
+
+model Appointment {
+  id                    String   @id @default(cuid())
+  appointmentDataTime   DateTime 
+  hospital              String
+  reason                String
+  status                Status
+
+  patient               Patient  @relation(fields: [patientId], references: [id])
+  patientId             String
+  doctor                Doctor   @relation(fields: [doctorId], references: [id])
+  doctorId              String
+}
+
+enum Status {
+  PENDING
+  DONE
+  CANCELLED
+}
+model Doctor {
+  id          String   @id @default(cuid())
+  image       String
+  phone       String
+  
+  appointments Appointment[]
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @unique
+  specialities SpecialityDoctor[]
+}
+
+model SpecialityDoctor {
+  id        String      @id   @default(cuid())
+
+
+  doctor      Doctor     @relation(fields: [doctorId], references: [id])
+  doctorId    String
+  speciality  Speciality     @relation(fields: [specialityId], references: [id])
+  specialityId      String
+
+}
+
+model Speciality {
+    id          String   @id @default(cuid())
+    name        String
+
+    doctors     SpecialityDoctor[]
+}
+
+
+
+
