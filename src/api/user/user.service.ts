@@ -9,21 +9,12 @@ export async function getAllUser() {
   const users = await prisma.user.findMany({
     select: {
       id: false,
-      firstName: true,
-      lastName: true,
+      fullName: true,
       email: true,
-      avatar: true,
-      //
-      roles:{
-        select: {
-          Role: {
-            select: {
-              id: true,
-              name: true,
-            }
-          }
-        }
-      }
+      status: true,
+      doctor: true,
+      patient: true,
+      admin: true
     }
   });
   return users;
@@ -56,22 +47,16 @@ export async function getUserById(id: string) {
 }
 
 export async function getUserByEmail(email: string) {
+
   const user = await prisma.user.findUnique({
     where: {
-      email,
+      email
     },
     include: {
-      roles: {
-        select: {
-          Role: {
-            select: {
-              id: true,
-              name: true
-            }
-          }
-        }
-      }
-    }
+      admin: true,
+      doctor: true,
+      patient: true
+    },
   });
 
   return user;

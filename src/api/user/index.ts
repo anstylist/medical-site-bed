@@ -5,6 +5,7 @@ import {
   deleteUserHandler,
   getAllUserHandler,
   getUserHandler,
+  getUserId,
   updateUserHandler,
 } from './user.controller';
 import { isAuthenticated } from '../../auth/auth.controller';
@@ -26,5 +27,8 @@ router.delete('/', isAuthenticated, deleteUserHandler);
 
 // /api/users/ -> PATCH
 router.patch('/', isAuthenticated, updateUserHandler);
+
+// /api/users/ -> PATCH
+router.patch('/', isAuthenticated, hasRole(['ADMIN']), updateUserHandler);
 
 export default router;
