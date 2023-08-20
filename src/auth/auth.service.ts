@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import crypto from 'node:crypto';
 
 import { PayloadType } from './auth.types';
 
@@ -12,6 +13,10 @@ export const verifyToken = (token: string) => {
 
 export const signToken = (payload: PayloadType) => {
   const token = jwt.sign(payload, SECRET, { expiresIn: '1d' })
-
   return token
+}
+
+export const getTemporaryToken = () => {
+  const resetToken = crypto.randomBytes(20).toString('hex');
+  return resetToken
 }

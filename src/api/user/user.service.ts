@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 import { hashPassword } from '../../auth/utils/bcrypt';
-import { User } from './user.types';
+import { User, UserForgotPassword } from './user.types';
 
 const prisma = new PrismaClient();
 
@@ -46,6 +46,18 @@ export async function getUserById(id: string) {
   return user;
 }
 
+export async function getUserByResetToken(forgotPasswordToken: string) {
+  const user = await prisma.user.findUnique(
+    {
+      where: {
+        forgotPasswordToken
+      }
+    }
+  )
+
+  return user;
+}
+
 export async function getUserByEmail(email: string) {
 
   const user = await prisma.user.findUnique({
@@ -72,13 +84,31 @@ export async function deleteUser(id: string) {
   return user;
 }
 
-export async function updateUser(data: User) {
-  const user = await prisma.user.update({
+export async function updateUser(id: string, data: User) {
+  return prisma.user.update({
     where: {
-      id: data.id,
+      id: id,
+    },
+    data
+  });
+}
+
+export async function updateUserPassword(user: User, newPassword: string) {
+  return prisma.user.update({
+    where: {
+      id: user.id
+    },
+    data: {
+      password: newPassword
+    }
+  });
+}
+
+export async function updateUserForgotPassword(user: User, data: UserForgotPassword) {
+  return prisma.user.update({
+    where: {
+      id: user.id,
     },
     data,
   });
-
-  return user;
 }
