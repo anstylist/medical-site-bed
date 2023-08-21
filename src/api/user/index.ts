@@ -1,11 +1,12 @@
 import { Router } from 'express';
 
 import {
+  changePasswordHandler,
   createUserHandler,
   deleteUserHandler,
   getAllUserHandler,
   getUserHandler,
-  getUserId,
+  updateAnyUserHandler,
   updateUserHandler,
 } from './user.controller';
 import { isAuthenticated } from '../../auth/auth.controller';
@@ -28,7 +29,10 @@ router.delete('/', isAuthenticated, deleteUserHandler);
 // /api/users/ -> PATCH
 router.patch('/', isAuthenticated, updateUserHandler);
 
-// /api/users/ -> PATCH
-router.patch('/', isAuthenticated, hasRole(['ADMIN']), updateUserHandler);
+// /api/users/:id -> PATCH
+router.patch('/:id', isAuthenticated, hasRole(['ADMIN']), updateAnyUserHandler);
+
+// /api/users/change-password -> PATCH
+router.patch('/change-password', isAuthenticated, changePasswordHandler)
 
 export default router;
