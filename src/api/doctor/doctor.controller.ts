@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { AuthRequest, OptionRequest } from '../../auth/auth.types';
+import { OptionRequest } from '../../auth/auth.types';
 import { createDoctor, getAllDoctor, getAllDoctorBySpeciality, getDoctorAppintmentByID, updateDoctor } from './doctor.service';
 
 export async function getDoctorAppointmentsHandler(req: OptionRequest, res: Response) {

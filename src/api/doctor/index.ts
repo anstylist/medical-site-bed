@@ -27,7 +27,7 @@ router.post('/', isAuthenticated, hasRole(['ADMIN']), createDoctorHandler)
 router.patch('/', isAuthenticated, hasRole(['DOCTOR']), updateDoctorHandler)
 
 // /api/doctors -> PACTH
-router.patch('/', isAuthenticated, hasRole(['ADMIN']), updateAnyDoctorHandler)
+router.patch('/:id', isAuthenticated, hasRole(['ADMIN']), updateAnyDoctorHandler)
 
 
 export default router;
