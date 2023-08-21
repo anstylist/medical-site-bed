@@ -22,7 +22,7 @@ export async function createUserHandler(req: Request, res: Response) {
   const data = req.body;
   try {
     const user = await createUser(data);
-    return res.status(200).json({ message: "User created successfully" })
+    return res.status(200).json({ message: "User created successfully", user })
 
   } catch (error) {
     return res.status(404).json({ error })
