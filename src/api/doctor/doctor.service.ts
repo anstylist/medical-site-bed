@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { Doctor } from "./doctor.types";
 
 const prisma = new PrismaClient();
 
@@ -11,8 +12,7 @@ export async function getDoctorAppintmentByID(id: string) {
       hospital: true,
       reason: true,
       status: true,
-      patient: true,
-      doctor: true
+      patient: true
     },
     where: {
       doctorId: id,
@@ -20,5 +20,11 @@ export async function getDoctorAppintmentByID(id: string) {
   });
 
   return doctorAppointments
+}
+
+export async function createDoctor(input: Doctor) {
+
+
+
 }
 
