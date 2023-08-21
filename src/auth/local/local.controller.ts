@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 
 import { getUserByEmail, getUserByResetToken, updateUser, updateUserForgotPassword } from '../../api/user/user.service';
 import { Patient } from '../../api/patient/patient.types';
-import { Doctor } from '../../api/doctor/doctor.types';
 import { Admin } from '../../api/admin/admin.types';
 import { comparePassword, hashPassword } from '../utils/bcrypt';
 import { getTemporaryToken, signToken } from '../auth.service';
@@ -39,7 +37,7 @@ export async function loginHandler(req: Request, res: Response) {
       fullName: string;
       email: string;
       status: boolean;
-      doctor?: Doctor;
+      doctor?: any;
       admin?: Admin;
       patient?: Patient
     };
@@ -51,13 +49,40 @@ export async function loginHandler(req: Request, res: Response) {
     }
 
     if (user.admin) {
-      profile.admin = user.admin as Admin;
+      profile.admin = user.admin;
     }
     else if (user.doctor) {
-      profile.doctor = user.doctor;
+      profile.doctor = {
+        image: user.doctor.image,
+        phone: user.doctor.phone,
+        socialLinks: [
+          {
+            "type": "facebook",
+            "url": user.doctor.facebook,
+          },
+          {
+            "type": "instagram",
+            "url": user.doctor.instagram
+          },
+          {
+            "type": "twitter",
+            "url": user.doctor.twitter
+          },
+          {
+            "type": "linkedin",
+            "url": user.doctor.linkdein
+          }
+        ],
+        specialities: [] =
+          user.doctor.specialities.map((item) => {
+            return item.speciality.name
+          })
+        ,
+        appointments: [] = user.doctor.appointments
+      }
     }
     else if (user.patient) {
-      profile.patient = user.patient as Patient;
+      profile.patient = user.patient;
     }
 
     return res.status(200).json({ token, profile })

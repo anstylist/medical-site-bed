@@ -12,7 +12,16 @@ export async function getAllUser() {
       fullName: true,
       email: true,
       status: true,
-      doctor: true,
+      doctor: {
+        include: {
+          specialities: {
+            include: {
+              speciality: true
+            }
+          },
+          appointments: true
+        }
+      },
       patient: true,
       admin: true
     }
@@ -66,7 +75,16 @@ export async function getUserByEmail(email: string) {
     },
     include: {
       admin: true,
-      doctor: true,
+      doctor: {
+        include: {
+          specialities: {
+            include: {
+              speciality: true
+            }
+          },
+          appointments: true
+        }
+      },
       patient: true
     },
   });
