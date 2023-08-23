@@ -70,7 +70,7 @@ export async function loginHandler(req: Request, res: Response) {
           },
           {
             "type": "linkedin",
-            "url": user.doctor.linkdein
+            "url": user.doctor.linkedin
           }
         ],
         specialities: [] =

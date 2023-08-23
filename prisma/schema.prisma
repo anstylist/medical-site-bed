@@ -118,7 +118,7 @@ model Doctor {
   phone     String
   facebook  String?
   twitter   String?
-  linkdein  String?
+  linkedin  String?
   instagram String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
