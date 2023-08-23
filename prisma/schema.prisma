@@ -11,13 +11,15 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  fullName  String
-  password  String
-  status    Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  fullName            String
+  password            String
+  forgotPasswordToken String?   @unique
+  forgotPasswordTime  DateTime?
+  status              Boolean   @default(true)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 
   orders  Order[]
   doctor  Doctor?
@@ -114,6 +116,10 @@ model Doctor {
   id        String   @id @default(cuid())
   image     String
   phone     String
+  facebook  String?
+  twitter   String?
+  linkedin  String?
+  instagram String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -136,7 +142,7 @@ model SpecialityDoctor {
 
 model Speciality {
   id        String   @id @default(cuid())
-  name      String
+  name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

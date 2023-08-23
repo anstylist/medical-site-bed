@@ -1,14 +1,18 @@
 import { Router } from 'express'
 
-import { loginHandler } from './local.controller'
+import { loginHandler, forgotPasswordHandler, resetPasswordHandler } from './local.controller'
 
 const route = Router()
 
-//login -> POST /auth/local/login
+//login -> POST /api/auth/login
 route.post('/login', loginHandler)
 
-//change password
-//reset password
+//forgot password -> POST /api/auth/forgot-password
+route.post('/forgot-password', forgotPasswordHandler)
+
+//reset password -> PATCH /api/auth/reset-password
+route.patch('/reset-password', resetPasswordHandler)
+
 //active account
 //louout
 

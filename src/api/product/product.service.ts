@@ -5,30 +5,25 @@ import { Product } from './product.types'
 const prisma = new PrismaClient()
 
 export const getAllProducts = async () => {
-  const products = await prisma.product.findMany({
-    include: {
-      reviews: {
-        select: {
-          id: true,
-          text: true,
-          rating: true,
-        }
-      }
-    }
-  })
-
+  const products = await prisma.product.findMany()
   return products
 }
 
-export const createProduct = async (input: Product) => {
+export const createProduct = async (data: Product) => {
   const product = await prisma.product.create({
-    data: {
-      name: input.name,
-      price: input.price,
-      description: input.description,
-      stock: 100
-    }
+    data
   })
-
   return product
 }
+
+export const updateProduct = async (data: Product) => {
+  const product = await prisma.product.update({
+    where: {
+      id: data.id
+    },
+    data
+  })
+  return product
+}
+
+
