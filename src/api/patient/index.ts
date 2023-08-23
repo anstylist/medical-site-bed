@@ -5,9 +5,9 @@ import { getPatientAppointmentByIDHandler, updatePatientHandler } from './patien
 const router = Router();
 
 // /api/patient/appointments -> PATCH
-router.patch('/', isAuthenticated, hasRole(['PATIENT']), updatePatientHandler);
+router.patch('/my-profile', isAuthenticated, hasRole(['PATIENT']), updatePatientHandler);
 
-// /api/patient/appointments -> PATCH
+// /api/patient/appointments -> GET
 router.get('/appointments', isAuthenticated, hasRole(['PATIENT']), getPatientAppointmentByIDHandler);
 
 export default router;
