@@ -34,7 +34,7 @@ export async function getAllDoctor() {
       image: true,
       facebook: true,
       twitter: true,
-      linkdein: true,
+      linkedin: true,
       instagram: true,
       specialities: {
         select: {
@@ -49,6 +49,38 @@ export async function getAllDoctor() {
         select: {
           fullName: true,
           email: true
+        }
+      }
+    }
+  })
+  return doctors
+}
+
+export async function getAllDoctorAdmin() {
+  const doctors = await prisma.doctor.findMany({
+    select: {
+      id: true,
+      phone: true,
+      image: true,
+      facebook: true,
+      twitter: true,
+      linkedin: true,
+      instagram: true,
+      specialities: {
+        select: {
+          speciality: {
+            select: {
+              name: true
+            }
+          }
+        }
+      },
+      user: {
+        select: {
+          fullName: true,
+          email: true,
+          password: true,
+          status: true
         }
       }
     }
@@ -71,7 +103,7 @@ export async function getAllDoctorBySpeciality(specialityName: string) {
       image: true,
       facebook: true,
       twitter: true,
-      linkdein: true,
+      linkedin: true,
       instagram: true,
       specialities: {
         select: {
@@ -136,7 +168,7 @@ export async function createDoctor(userData: User, doctorData: Doctor, specialit
           phone: doctorData.phone,
           facebook: doctorData.facebook,
           twitter: doctorData.twitter,
-          linkdein: doctorData.linkdein,
+          linkedin: doctorData.linkedin,
           instagram: doctorData.instagram,
           specialities: {
             create: specialities

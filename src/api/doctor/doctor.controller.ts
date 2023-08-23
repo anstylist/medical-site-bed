@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { OptionRequest } from '../../auth/auth.types';
-import { createDoctor, getAllDoctor, getAllDoctorBySpeciality, getDoctorAppintmentByID, updateDoctor } from './doctor.service';
+import { createDoctor, getAllDoctor, getAllDoctorAdmin, getAllDoctorBySpeciality, getDoctorAppintmentByID, updateDoctor } from './doctor.service';
 
 export async function getDoctorAppointmentsHandler(req: OptionRequest, res: Response) {
 
@@ -43,8 +43,54 @@ export async function getAllDoctorHandler(req: Request, res: Response) {
             url: item.twitter
           },
           {
-            type: "linkdein",
-            url: item.linkdein
+            type: "linkedin",
+            url: item.linkedin
+          },
+          {
+            type: "instagram",
+            url: item.instagram
+          }
+        ]
+      }
+    })
+
+    res.status(200).json(doctors)
+
+  } catch (error) {
+    res.status(500).json({ error })
+
+  }
+}
+
+export async function getAllDoctorAdminHandler(req: Request, res: Response) {
+  try {
+    const data = await getAllDoctorAdmin()
+
+    const doctors = data.map((item) => {
+      return {
+        id: item.id,
+        fullName: item.user.fullName,
+        email: item.user.email,
+        password: item.user.password,
+        status: item.user.status,
+        image: item.image,
+        phone: item.phone,
+        specialities: [] =
+          item.specialities.map((item) => {
+            return item.speciality.name
+          }),
+        socialLinks: [
+          {
+            type: "facebook",
+            url: item.facebook
+          },
+          {
+            type: "twitter",
+            url: item.twitter
+          },
+          {
+            type: "linkedin",
+            url: item.linkedin
           },
           {
             type: "instagram",
@@ -85,8 +131,8 @@ export async function getAllDoctorBySpecialityHandler(req: Request, res: Respons
             url: item.twitter
           },
           {
-            type: "linkdein",
-            url: item.linkdein
+            type: "linkedin",
+            url: item.linkedin
           },
           {
             type: "instagram",

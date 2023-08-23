@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { hasRole, isAuthenticated } from '../../auth/auth.controller';
 import {
   createDoctorHandler,
+  getAllDoctorAdminHandler,
   getAllDoctorBySpecialityHandler,
   getAllDoctorHandler,
   getDoctorAppointmentsHandler,
@@ -14,11 +15,12 @@ const router = Router();
 // /api/doctors/appointments -> GET
 router.get('/appointments', isAuthenticated, hasRole(['DOCTOR']), getDoctorAppointmentsHandler);
 
-// /api/doctors -> GET
-router.get('/', getAllDoctorBySpecialityHandler)
 
 // /api/doctors/all -> GET
-router.get('/all', getAllDoctorHandler)
+router.get('/', getAllDoctorHandler)
+
+// /api/doctors/ -> GET ALL - ADMIN
+router.get('/all', isAuthenticated, hasRole(['ADMIN']), getAllDoctorAdminHandler)
 
 // /api/doctors -> POST
 router.post('/', isAuthenticated, hasRole(['ADMIN']), createDoctorHandler)
