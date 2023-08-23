@@ -101,15 +101,16 @@ export async function updateUserHandler(req: AuthRequest, res: Response) {
 }
 
 export async function updateAnyUserHandler(req: Request, res: Response) {
-  const id = req.params.id
+  const email = req.params.email
   const data = req.body
 
   try {
 
-    await updateUser(id, data);
+    await updateUser(email, data);
     return res.status(200).json({ message: "successfully upgraded" })
 
   } catch (error) {
+    console.log('aqui')
     return res.status(500).json({ error })
   }
 }

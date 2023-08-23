@@ -26,7 +26,7 @@ router.get('/all', isAuthenticated, hasRole(['ADMIN']), getAllDoctorAdminHandler
 router.post('/', isAuthenticated, hasRole(['ADMIN']), createDoctorHandler)
 
 // /api/doctors -> PACTH
-router.patch('/', isAuthenticated, hasRole(['DOCTOR']), updateDoctorHandler)
+router.patch('/my-profile', isAuthenticated, hasRole(['DOCTOR']), updateDoctorHandler)
 
 // /api/doctors -> PACTH
 router.patch('/:id', isAuthenticated, hasRole(['ADMIN']), updateAnyDoctorHandler)

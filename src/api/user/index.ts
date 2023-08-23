@@ -21,16 +21,16 @@ router.get('/', isAuthenticated, hasRole(['ADMIN']), getAllUserHandler);
 router.post('/', createUserHandler);
 
 // /api/users/single -> GET
-router.get('/single', isAuthenticated, getUserHandler);
+router.get('/my-profile', isAuthenticated, getUserHandler);
 
 // /api/users/ -> DELETE
-router.delete('/', isAuthenticated, deleteUserHandler);
+router.delete('/my-profile', isAuthenticated, deleteUserHandler);
 
 // /api/users/ -> PATCH
-router.patch('/', isAuthenticated, updateUserHandler);
+router.patch('/my-profile', isAuthenticated, updateUserHandler);
 
-// /api/users/:id -> PATCH
-router.patch('/:id', isAuthenticated, hasRole(['ADMIN']), updateAnyUserHandler);
+// /api/users/:email -> PATCH
+router.patch('/:email', isAuthenticated, hasRole(['ADMIN']), updateAnyUserHandler);
 
 // /api/users/change-password -> PATCH
 router.patch('/change-password', isAuthenticated, changePasswordHandler)
