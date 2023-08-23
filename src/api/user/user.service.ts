@@ -102,10 +102,10 @@ export async function deleteUser(id: string) {
   return user;
 }
 
-export async function updateUser(id: string, data: User) {
+export async function updateUser(email: string, data: User) {
   return prisma.user.update({
     where: {
-      id: id,
+      email: email,
     },
     data
   });
