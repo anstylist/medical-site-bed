@@ -30,7 +30,6 @@ export async function getAllUser() {
 }
 
 export async function createUser(input: User) {
-
   const hashedPassword = await hashPassword(input.password);
 
   const data = {
