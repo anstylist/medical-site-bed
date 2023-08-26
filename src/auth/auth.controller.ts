@@ -43,21 +43,24 @@ export const hasRole = (allowRoles: string[]) => {
   ) => {
 
     const user = req.user as any
-    let userRole: string | undefined
+    let userRoles: string[] = []
 
     if (user.admin) {
-      userRole = 'ADMIN';
-    } else if (user.doctor) {
-      userRole = 'DOCTOR';
-    } else if (user.patient) {
-      userRole = 'PATIENT';
+      userRoles?.push('ADMIN');
+    }
+    if (user.doctor) {
+      userRoles?.push('DOCTOR');
+    }
+    if (user.patient) {
+      userRoles?.push('PATIENT');
     }
 
-    if (!userRole) {
+    if (userRoles.length === 0) {
       return res.status(403).json({ message: 'Forbidden' });
     }
 
-    const hasPermission = allowRoles.includes(userRole);
+    const hasPermission = userRoles.some(role => allowRoles.includes(role));
+
 
     if (!hasPermission) {
       return res.status(403).json({ message: 'Forbidden' });

@@ -51,7 +51,7 @@ export async function loginHandler(req: Request, res: Response) {
     if (user.admin) {
       profile.admin = user.admin;
     }
-    else if (user.doctor) {
+    if (user.doctor) {
       profile.doctor = {
         image: user.doctor.image,
         phone: user.doctor.phone,
@@ -81,7 +81,7 @@ export async function loginHandler(req: Request, res: Response) {
         appointments: [] = user.doctor.appointments
       }
     }
-    else if (user.patient) {
+    if (user.patient) {
       profile.patient = user.patient;
     }
 
