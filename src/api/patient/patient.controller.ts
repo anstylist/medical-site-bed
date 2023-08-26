@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { OptionRequest } from '../../auth/auth.types';
-import { getPatientAppintmentByID, updatePatient } from './patient.service';
+import { AuthRequest, OptionRequest } from '../../auth/auth.types';
+import { getPatientAppintmentByID, getPatientById, updatePatient } from './patient.service';
 import { Patient } from '@prisma/client';
 
 export async function updatePatientHandler(req: OptionRequest, res: Response) {
@@ -39,4 +39,16 @@ export async function getPatientAppointmentByIDHandler(req: OptionRequest, res: 
   } catch (error) {
     res.status(500).json({ error })
   }
+}
+
+export async function getPatientSingle(req: OptionRequest, res: Response) {
+  const { id } = req.user
+
+  try {
+    const patient = await getPatientById(id)
+    res.status(200).json(patient)
+  } catch (error) {
+    res.status(404).json(error)
+  }
+
 }

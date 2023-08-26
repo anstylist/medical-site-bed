@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { hasRole, isAuthenticated } from '../../auth/auth.controller';
-import { getPatientAppointmentByIDHandler, updatePatientHandler } from './patient.controller';
+import { getPatientAppointmentByIDHandler, getPatientSingle, updatePatientHandler } from './patient.controller';
 
 const router = Router();
 
@@ -9,5 +9,8 @@ router.patch('/my-profile', isAuthenticated, hasRole(['PATIENT']), updatePatient
 
 // /api/patient/appointments -> GET
 router.get('/appointments', isAuthenticated, hasRole(['PATIENT']), getPatientAppointmentByIDHandler);
+
+// /api/patient/appointments -> GET
+router.get('/', isAuthenticated, getPatientSingle);
 
 export default router;

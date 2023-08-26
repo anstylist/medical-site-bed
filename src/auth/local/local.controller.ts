@@ -37,53 +37,23 @@ export async function loginHandler(req: Request, res: Response) {
       fullName: string;
       email: string;
       status: boolean;
-      doctor?: any;
-      admin?: Admin;
-      patient?: Patient
+      roles: string[]
     };
+
+    const roles = []
+    if (user.admin) roles.push('ADMIN')
+    if (user.patient) roles.push('PATIENT')
+    if (user.doctor) roles.push('DOCTOR')
+    if (!roles.length) roles.push('USER')
 
     const profile: Profile = {
       fullName: user.fullName,
       email: user.email,
-      status: user.status
+      status: user.status,
+      roles
     }
 
-    if (user.admin) {
-      profile.admin = user.admin;
-    }
-    if (user.doctor) {
-      profile.doctor = {
-        image: user.doctor.image,
-        phone: user.doctor.phone,
-        socialLinks: [
-          {
-            "type": "facebook",
-            "url": user.doctor.facebook,
-          },
-          {
-            "type": "instagram",
-            "url": user.doctor.instagram
-          },
-          {
-            "type": "twitter",
-            "url": user.doctor.twitter
-          },
-          {
-            "type": "linkedin",
-            "url": user.doctor.linkedin
-          }
-        ],
-        specialities: [] =
-          user.doctor.specialities.map((item) => {
-            return item.speciality.name
-          })
-        ,
-        appointments: [] = user.doctor.appointments
-      }
-    }
-    if (user.patient) {
-      profile.patient = user.patient;
-    }
+
 
     return res.status(200).json({ token, profile })
 
