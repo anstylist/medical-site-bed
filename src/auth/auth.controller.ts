@@ -55,7 +55,7 @@ export const hasRole = (allowRoles: string[]) => {
       userRoles?.push('PATIENT');
     }
 
-    if (userRoles.length === 0) {
+    if (!userRoles.length) {
       return res.status(403).json({ message: 'Forbidden' });
     }
 
