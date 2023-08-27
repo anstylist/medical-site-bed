@@ -1,5 +1,6 @@
 import { Appointment, Patient, PrismaClient } from "@prisma/client";
 import { getPatientByEmail, getPatientById } from "../patient/patient.service";
+import { getUserById } from "../user/user.service";
 
 
 const prisma = new PrismaClient();
@@ -11,16 +12,17 @@ export async function createAppointmentWithPatient(id: string, patientData: Pati
   if (!patient) {
     return await prisma.patient.create({
       data: {
+        userId: id,
         rh: patientData.rh,
         gender: patientData.gender,
         birthDate: patientData.birthDate,
         phone: patientData.phone,
-        userId: id,
         countryId: patientData.countryId,
         appointments: {
           create: appointmentData
         }
       },
+
       include: {
         appointments: true
       }

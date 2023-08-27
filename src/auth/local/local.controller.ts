@@ -53,8 +53,6 @@ export async function loginHandler(req: Request, res: Response) {
       roles
     }
 
-
-
     return res.status(200).json({ token, profile })
 
   } catch (error) { }
