@@ -15,6 +15,8 @@ const router = Router();
 // /api/doctors/appointments -> GET
 router.get('/appointments', isAuthenticated, hasRole(['DOCTOR']), getDoctorAppointmentsHandler);
 
+// /api/doctors/by-speciality -> GET
+router.get('/by-speciality', getAllDoctorBySpecialityHandler);
 
 // /api/doctors/all -> GET
 router.get('/', getAllDoctorHandler)

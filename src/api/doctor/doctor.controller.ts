@@ -110,40 +110,9 @@ export async function getAllDoctorAdminHandler(req: Request, res: Response) {
 
 export async function getAllDoctorBySpecialityHandler(req: Request, res: Response) {
   try {
-    const { specialityName } = req.body
+    const { specialityName = "" }: { specialityName?: string } = req.query;
     const data = await getAllDoctorBySpeciality(specialityName)
-
-    const doctorsBySpeciality = data.map((item) => {
-      return {
-        id: item.id,
-        fullName: item.user.fullName,
-        email: item.user.email,
-        image: item.image,
-        phone: item.phone,
-        speciality: item.specialities[0].speciality.name,
-        socialLinks: [
-          {
-            type: "facebook",
-            url: item.facebook
-          },
-          {
-            type: "twitter",
-            url: item.twitter
-          },
-          {
-            type: "linkedin",
-            url: item.linkedin
-          },
-          {
-            type: "instagram",
-            url: item.instagram
-          }
-        ]
-      }
-    })
-
-    res.status(200).json(doctorsBySpeciality)
-
+    res.status(200).json(data)
   } catch (error) {
     console.log(error)
     res.status(500).json({ error });

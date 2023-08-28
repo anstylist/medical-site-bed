@@ -99,12 +99,6 @@ export async function getAllDoctorBySpeciality(specialityName: string) {
   const doctors = await prisma.doctor.findMany({
     select: {
       id: true,
-      phone: true,
-      image: true,
-      facebook: true,
-      twitter: true,
-      linkedin: true,
-      instagram: true,
       specialities: {
         select: {
           speciality: true
@@ -113,7 +107,6 @@ export async function getAllDoctorBySpeciality(specialityName: string) {
       user: {
         select: {
           fullName: true,
-          email: true
         }
       },
     },
