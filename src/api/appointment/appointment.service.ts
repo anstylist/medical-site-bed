@@ -40,3 +40,59 @@ export async function createAppointmentWithPatient(id: string, patientData: Pati
     }
   })
 }
+
+export async function getPatientAppointmentById(id: string) {
+  const patient = await getPatientById(id)
+
+  return await prisma.appointment.findMany({
+    select: {
+      id: true,
+      hospital: true,
+      reason: true,
+      appointmentDataTime: true,
+      status: true,
+      doctor: {
+        select: {
+          image: true,
+          phone: true,
+          facebook: true,
+          twitter: true,
+          linkedin: true,
+          instagram: true,
+          user: {
+            select: {
+              fullName: true
+            }
+          },
+          specialities: {
+            select: {
+              speciality: {
+                select: {
+                  id: true,
+                  name: true
+                }
+              }
+            }
+          }
+        }
+      },
+      patient: {
+        select: {
+          rh: true,
+          gender: true,
+          birthDate: true,
+          phone: true,
+          user: {
+            select: {
+              fullName: true
+            }
+          }
+        }
+      }
+
+    },
+    where: {
+      patientId: patient?.id
+    }
+  })
+}
