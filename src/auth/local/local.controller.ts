@@ -61,10 +61,11 @@ export async function loginHandler(req: Request, res: Response) {
 export async function forgotPasswordHandler(req: Request, res: Response) {
 
   const { email } = req.body
-  console.log(email)
+  console.log("Request received with email:", email);
 
   try {
     const user = await getUserByEmail(email)
+    console.log("User found:", user);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -76,12 +77,14 @@ export async function forgotPasswordHandler(req: Request, res: Response) {
       forgotPasswordToken: token,
       forgotPasswordTime: new Date()
     }
+    console.log(token);
 
-    await updateUserForgotPassword(user, data)
-
-    return res.status(200).json({ message: `An email with a link to reset your password was already sent` })
+   const updatedUser = await updateUserForgotPassword(user, data)
+   console.log(updatedUser);
+  return res.status(200).json({ message: "Reset link sent to email", token, fullName: user.fullName });
 
   } catch (error) {
+    console.error("Error:", error);
     return res.status(500).json({ error })
   }
 }
@@ -89,11 +92,15 @@ export async function forgotPasswordHandler(req: Request, res: Response) {
 
 
 export async function resetPasswordHandler(req: Request, res: Response) {
-
-  const { token = "" }: { token?: string } = req.query;
+  console.log('Received reset password request:', req.url);
+  
+  const { token = "" }: { token?: string } = req.params;
   const { newPassword } = req.body
+  
+  console.log('Query Parameters:', req.params);
 
   if (!token) {
+    console.log('Token does not exist');
     return res.status(404).json({ message: "User not found" });
   }
 
@@ -114,14 +121,17 @@ export async function resetPasswordHandler(req: Request, res: Response) {
         forgotPasswordToken: null,
         forgotPasswordTime: null
       }
+      console.log('User ID:', user.id)
+      console.log('New Password:', newPassword);
 
-      await updateUser(data.id, data)
+      await updateUser(user.email, data)
       return res.status(200).json({ message: "Your password has been changed successfully" });
     }
 
     return res.status(401).json({ message: "Your token has expired, try the process again" });
 
   } catch (error) {
+    console.error('Error in resetPasswordHandler:', error)
     return res.status(500).json({ error })
   }
 }
