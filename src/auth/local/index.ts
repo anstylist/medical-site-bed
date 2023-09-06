@@ -11,7 +11,7 @@ route.post('/login', loginHandler)
 route.post('/forgot-password', forgotPasswordHandler)
 
 //reset password -> PATCH /api/auth/reset-password
-route.patch('/reset-password', resetPasswordHandler)
+route.patch('/reset-password/:token', resetPasswordHandler)
 
 //active account
 //louout
