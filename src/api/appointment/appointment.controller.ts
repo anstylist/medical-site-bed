@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { OptionRequest } from "../../auth/auth.types";
-import { createAppointmentWithPatient, getPatientAppointmentById } from "./appointment.service";
+import { createAppointmentWithPatient, getDoctorAppointmentsById, getPatientAppointmentById } from "./appointment.service";
 
 
 export async function createAppointmentWithPatientHandler(req: OptionRequest, res: Response) {
@@ -24,6 +24,18 @@ export async function appointmentWithPatientHandler(req: OptionRequest, res: Res
   const { id } = req.user
   try {
     const appointment = await getPatientAppointmentById(id)
+    return res.status(200).json({ appointment })
+
+  } catch (error) {
+    return res.status(500).json({ error })
+
+  }
+}
+
+export async function appointmentWithDoctorHandler(req: OptionRequest, res: Response) {
+  const { id } = req.user
+  try {
+    const appointment = await getDoctorAppointmentsById(id)
     return res.status(200).json({ appointment })
 
   } catch (error) {

@@ -6,24 +6,12 @@ import { getSpecialityByName } from "../speciality/speciality.service";
 
 const prisma = new PrismaClient();
 
-
-export async function getDoctorAppintmentByID(id: string) {
-  const doctorAppointments = await prisma.appointment.findMany({
-    select: {
-      id: true,
-      appointmentDataTime: true,
-      hospital: true,
-      reason: true,
-      status: true,
-      patient: true,
-      doctor: true,
-    },
+export async function getDoctorById(id: string) {
+  return await prisma.doctor.findFirst({
     where: {
-      doctorId: id,
-    },
-  });
-
-  return doctorAppointments
+      id
+    }
+  })
 }
 
 export async function getAllDoctor() {
