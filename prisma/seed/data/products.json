@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "name": "Face mask",
+    "code": "A1",
+    "price": 15,
+    "category": "Mask",
+    "stock": 94,
+    "quantity": 1,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "image": "https://res.cloudinary.com/dzmkilinu/image/upload/v1689393385/medical-site/shop-1_embziq.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Hand wash",
+    "code": "HW2",
+    "price": 30,
+    "category": "Wash",
+    "stock": 42,
+    "quantity": 1,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "image": "https://res.cloudinary.com/dzmkilinu/image/upload/v1689393384/medical-site/shop-2_yhtbqy.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Electronic thermometer",
+    "code": "ET8",
+    "price": 25,
+    "category": "Thermomether",
+    "stock": 19,
+    "quantity": 1,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "image": "https://res.cloudinary.com/dzmkilinu/image/upload/v1689393385/medical-site/shop-3_lkfcx4.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Covid-19 vaccine",
+    "code": "C19",
+    "price": 55,
+    "category": "Vaccine",
+    "stock": 294,
+    "quantity": 1,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "image": "https://res.cloudinary.com/dzmkilinu/image/upload/v1689393384/medical-site/shop-4_qkk9n5.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Stethoscope",
+    "code": "S12",
+    "price": 45,
+    "stock": 4,
+    "quantity": 1,
+    "category": "Stethoscope",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "image": "https://res.cloudinary.com/dzmkilinu/image/upload/v1689393384/medical-site/shop-5_lmky5l.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Microscope",
+    "code": "M75",
+    "price": 299,
+    "stock": 12,
+    "quantity": 1,
+    "category": "Microscope",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "image": "https://res.cloudinary.com/dzmkilinu/image/upload/v1689393382/medical-site/shop-6_iwhfmg.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Eyeglasses measurement",
+    "code": "EM02",
+    "price": 150,
+    "stock": 49,
+    "quantity": 1,
+    "category": "Eyeglass",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "image": "https://res.cloudinary.com/dzmkilinu/image/upload/v1689393384/medical-site/shop-7_wyjxvh.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Eye test machine",
+    "code": "ET23",
+    "price": 450,
+    "stock": 1,
+    "quantity": 1,
+    "category": "Machine",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "image": "https://res.cloudinary.com/dzmkilinu/image/upload/v1689393381/medical-site/shop-8_r5xrsw.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Chemical test tubes",
+    "code": "CTT1",
+    "price": 35,
+    "stock": 20,
+    "quantity": 1,
+    "category": "Test tubes",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "image": "https://res.cloudinary.com/dzmkilinu/image/upload/v1689393384/medical-site/shop-9_v8sog4.jpg"
+  }
+]

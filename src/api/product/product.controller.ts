@@ -9,7 +9,6 @@ import {
 export const getAllProductsHandler = async (req: Request, res: Response) => {
 
   try {
-
     const products = await getAllProducts()
     return res.status(200).json(products)
 

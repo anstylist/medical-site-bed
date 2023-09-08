@@ -18,7 +18,4 @@ router.post('/', isAuthenticated, hasRole(['ADMIN']), createProductHandler)
 router.patch('/', isAuthenticated, hasRole(['ADMIN']), updateProductHandler)
 
 
-
-
-
 export default router
