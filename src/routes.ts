@@ -9,7 +9,8 @@ import patientRouter from './api/patient';
 import appointmentRouter from './api/appointment';
 import productRouter from './api/product';
 import orderRouter from './api/order';
-import countryRouter from './api/country'
+import countryRouter from './api/country';
+import checkoutRouter from './api/checkout';
 
 const routes = (app: Application) => {
   app.use('/api/healthcheck', healthcheckRouter)
@@ -21,6 +22,7 @@ const routes = (app: Application) => {
   app.use('/api/products', productRouter)
   app.use('/api/orders', orderRouter)
   app.use('/api/country', countryRouter)
+  app.use('/api/checkout', checkoutRouter)
 
   //Auth
   app.use('/api/auth', authLocalRouter)
