@@ -83,9 +83,16 @@ Response:
 
 4. Update `.env` with the required info
 
-5. Run the migrations: `prisma migrate dev`
+5. Run the migrations and create new migrations if new changes were made into the schema file:
+```sh
+npx prisma migrate dev
+```
+6. Generate the Prisma Clients after changing the Schema file:
+```sh
+npx prisma generate
+```
 
-6. Run `npm run dev` to start the development server.
+7. Run `npm run dev` to start the development server.
 
 ## License
 

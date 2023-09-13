@@ -5,7 +5,6 @@ import {
   getAllDoctorAdminHandler,
   getAllDoctorBySpecialityHandler,
   getAllDoctorHandler,
-  getDoctorAppointmentsHandler,
   updateAnyDoctorHandler,
   updateDoctorHandler
 } from './doctor.controller';
