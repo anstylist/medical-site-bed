@@ -99,7 +99,6 @@ export async function getAllDoctorBySpecialityHandler(req: Request, res: Respons
     const data = await getAllDoctorBySpeciality(specialityName)
     res.status(200).json(data)
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error });
   }
 
@@ -108,9 +107,13 @@ export async function getAllDoctorBySpecialityHandler(req: Request, res: Respons
 export async function createDoctorHandler(req: Request, res: Response) {
 
   try {
+    const file = req.file
     const { userData, doctorData, specialitiesNames } = req.body;
+    const parsedUserData = JSON.parse(userData);
+    const parsedDoctorData = JSON.parse(doctorData);
+    const parsedSpecialitiesNames = JSON.parse(specialitiesNames);
 
-    const doctor = await createDoctor(userData, doctorData, specialitiesNames);
+    const doctor = await createDoctor(parsedUserData, parsedDoctorData, parsedSpecialitiesNames, file);
 
     return res.status(200).json({ message: "Doctor created successfully", doctor })
 
@@ -120,30 +123,17 @@ export async function createDoctorHandler(req: Request, res: Response) {
 
 }
 
-export async function updateDoctorHandler(req: OptionRequest, res: Response) {
-
-  try {
-    const { doctor: { id: doctorId } } = req.user
-    const data = req.body
-
-    const doctor = await updateDoctor(doctorId, data)
-
-    return res.status(200).json({ message: "Doctor updated successfully" })
-
-  } catch (error) {
-    return res.status(404).json({ error })
-  }
-
-}
-
-export async function updateAnyDoctorHandler(req: Request, res: Response) {
+export async function updateDoctorHandler(req: Request, res: Response) {
 
   try {
     const id = req.params.id
-    const data = req.body
+    const file = req.file
+    const { doctorData, specialitiesNames } = req.body;
 
-    const doctor = await updateDoctor(id, data)
+    const parsedDoctorData = JSON.parse(doctorData);
+    const parsedSpecialitiesNames = JSON.parse(specialitiesNames);
 
+    const doctor = await updateDoctor(id, parsedDoctorData, parsedSpecialitiesNames, file)
     return res.status(200).json({ message: "Doctor updated successfully" })
 
   } catch (error) {
