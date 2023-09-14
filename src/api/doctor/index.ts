@@ -5,11 +5,16 @@ import {
   getAllDoctorAdminHandler,
   getAllDoctorBySpecialityHandler,
   getAllDoctorHandler,
-  updateAnyDoctorHandler,
   updateDoctorHandler
 } from './doctor.controller';
+import multer from 'multer';
 
 const router = Router();
+
+const upload = multer({
+  dest: './uploads/doctors',
+  preservePath: true,
+})
 
 // /api/doctors/by-speciality -> GET
 router.get('/by-speciality', getAllDoctorBySpecialityHandler);
@@ -21,13 +26,10 @@ router.get('/', getAllDoctorHandler)
 router.get('/all', isAuthenticated, hasRole(['ADMIN']), getAllDoctorAdminHandler)
 
 // /api/doctors -> POST
-router.post('/', isAuthenticated, hasRole(['ADMIN']), createDoctorHandler)
+router.post('/', isAuthenticated, hasRole(['ADMIN']), upload.single('image'), createDoctorHandler)
 
 // /api/doctors -> PACTH
-router.patch('/my-profile', isAuthenticated, hasRole(['DOCTOR']), updateDoctorHandler)
-
-// /api/doctors -> PACTH
-router.patch('/:id', isAuthenticated, hasRole(['ADMIN']), updateAnyDoctorHandler)
+router.patch('/:id', isAuthenticated, hasRole(['ADMIN']), upload.single('image'), updateDoctorHandler)
 
 
 export default router;

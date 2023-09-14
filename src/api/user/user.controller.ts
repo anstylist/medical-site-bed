@@ -26,7 +26,7 @@ export async function createUserHandler(req: Request, res: Response) {
 
   } catch (error: any) {
     if (error.code === "P2002" && error.meta.target.includes("email")) {
-      return res.status(400).json({message: "There is a user already registered with this email. Please log in or register with a different email."})
+      return res.status(400).json({ message: "There is a user already registered with this email. Please log in or register with a different email." })
     }
     return res.status(404).json({ error })
   }
@@ -113,7 +113,6 @@ export async function updateAnyUserHandler(req: Request, res: Response) {
     return res.status(200).json({ message: "successfully upgraded" })
 
   } catch (error) {
-    console.log('aqui')
     return res.status(500).json({ error })
   }
 }

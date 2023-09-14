@@ -37,7 +37,8 @@ export async function createAppointmentWithPatient(id: string, patientData: Pati
       reason: appointmentData.reason,
       status: appointmentData.status,
       doctorId: appointmentData.doctorId,
-      patientId: patient.id
+      patientId: patient.id,
+      specialityId: appointmentData.specialityId
     }
   })
 }
@@ -52,6 +53,11 @@ export async function getPatientAppointmentById(id: string) {
       reason: true,
       appointmentDataTime: true,
       status: true,
+      speciality: {
+        select: {
+          name: true
+        }
+      },
       doctor: {
         select: {
           image: true,
@@ -109,6 +115,11 @@ export async function getDoctorAppointmentsById(id: string) {
       reason: true,
       appointmentDataTime: true,
       status: true,
+      speciality: {
+        select: {
+          name: true
+        }
+      },
       doctor: {
         select: {
           image: true,
@@ -151,6 +162,79 @@ export async function getDoctorAppointmentsById(id: string) {
     },
     where: {
       doctorId: doctor?.id
+    }
+  })
+}
+
+export async function getAllAppointments() {
+  return await prisma.appointment.findMany({
+    select: {
+      id: true,
+      appointmentDataTime: true,
+      hospital: true,
+      reason: true,
+      status: true,
+      speciality: {
+        select: {
+          name: true
+        }
+      },
+      patient: {
+        select: {
+          rh: true,
+          gender: true,
+          birthDate: true,
+          phone: true,
+          user: {
+            select: {
+              fullName: true,
+              email: true
+            }
+          }
+        }
+      },
+      doctor: {
+        select: {
+          image: true,
+          phone: true,
+          facebook: true,
+          twitter: true,
+          linkedin: true,
+          instagram: true,
+          user: {
+            select: {
+              fullName: true,
+              email: true
+            }
+          },
+          specialities: {
+            select: {
+              speciality: {
+                select: {
+                  id: true,
+                  name: true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+}
+
+enum Status {
+  PENDING = 'PENDING',
+  DONE = 'DONE',
+  CANCELLED = 'CANCELLED'
+}
+export async function UpdateStatusAppointment(id: string, status: Status) {
+  return prisma.appointment.update({
+    where: {
+      id
+    },
+    data: {
+      status
     }
   })
 }

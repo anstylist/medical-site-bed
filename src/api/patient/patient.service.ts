@@ -31,3 +31,29 @@ export async function getPatientById(id: string) {
     }
   })
 }
+
+export async function getAllPatients() {
+  return prisma.patient.findMany({
+    select: {
+      id: true,
+      rh: true,
+      gender: true,
+      birthDate: true,
+      phone: true,
+      country: {
+        select: {
+          name: true
+        }
+      },
+      user: {
+        select: {
+          fullName: true,
+          email: true,
+          password: true,
+          status: true
+        },
+      }
+    }
+  })
+
+}
