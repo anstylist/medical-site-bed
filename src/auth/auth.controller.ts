@@ -14,22 +14,28 @@ export const isAuthenticated = async (
   // Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
   // [Bearer, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9]
   // const token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-  const token = req.headers?.authorization?.split(' ')[1];
+  try {
+    const token = req.headers?.authorization?.split(' ')[1];
 
-  if (!token) {
-    return res.status(401).json({ message: 'Unauthorized' });
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+    // Verify token
+    const decoded = verifyToken(token)
+    //const decoded = { id: '123', email: 'test'}
+
+    if (!decoded) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    const user = await getUserByEmail(decoded.email) as User
+
+    req.user = user
+  } catch (error: any) {
+    console.log(error)
+
+    return res.status(401).json({ message: 'Unauthorized' })
   }
-  // Verify token
-  const decoded = verifyToken(token)
-  //const decoded = { id: '123', email: 'test'}
-
-  if (!decoded) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
-  const user = await getUserByEmail(decoded.email) as User
-
-  req.user = user
   return next();
 }
 
@@ -44,6 +50,10 @@ export const hasRole = (allowRoles: string[]) => {
 
     const user = req.user as any
     let userRoles: string[] = []
+
+    if (!user) {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
 
     if (user.admin) {
       userRoles?.push('ADMIN');
