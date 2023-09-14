@@ -1,11 +1,64 @@
-# Backend Top-v23 - Make It Real 💻
+# Make It Real - Medical Site Back End 💻
 
-Main base of the services used within the Make It Real platforms
+The backend of the Make It Real Medical Site is built using Node.js and Express.js, with Prisma as the database ORM (Object-Relational Mapping). It handles user authentication, appointment management, product management, and communication with the frontend through RESTful APIs.
 
-- Built with Node.js and Express
-- Typescript
-- Prisma ORM
-- REST API
+**Technologies Used**
+**Node.js:** Node.js is a runtime environment that allows us to run JavaScript on the server-side. It's the foundation of our backend.
+
+**Express.js:** Express.js is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications. It's used to create the RESTful API endpoints.
+
+**Bcrypt:** Bcrypt is used for hashing user passwords before storing them in the database. It ensures that user passwords are securely stored.
+
+**JSON Web Tokens (JWT):** JWTs are used for user authentication. When a user logs in, a JWT is generated and sent to the client, which is then included in subsequent requests to authenticate the user.
+
+**Prisma:** Prisma is an ORM that simplifies database access. It's used to define the data models and interact with the PostgreSQL database.
+
+## User Authentication
+When a user registers or logs in, their password is hashed using Bcrypt before being stored in the database to ensure security.
+
+Upon successful login, a JWT (JSON Web Token) is generated and sent to the client, which is included in the headers of subsequent requests to authenticate the user.
+
+## RESTful API Endpoints
+The backend provides the following RESTful API endpoints:
+
+**Authentication:**
+
+POST /api/auth/register: Register a new user.
+
+POST /api/auth/login: Log in an existing user and receive a JWT.
+
+GET /api/auth/logout: Log out the user.
+
+
+**Appointments:**
+
+GET /api/appointments: Retrieve a list of appointments.
+
+POST /api/appointments: Create a new appointment.
+
+PUT /api/appointments/:id: Update an existing appointment.
+
+DELETE /api/appointments/:id: Delete an appointment.
+
+
+**Products:**
+
+GET /api/products: Retrieve a list of medical products.
+
+POST /api/products: Add a new medical product.
+
+PUT /api/products/:id: Update an existing medical product.
+
+DELETE /api/products/:id: Delete a medical product.
+
+
+## Database
+The backend uses PostgreSQL as the database to store user information, appointments, and medical product data.
+
+Prisma is used to define the data models, perform database migrations, and interact with the database.
+
+## Deployment
+The backend is deployed on Render, a cloud hosting service, to make it accessible to the frontend and users.
 
 ## Prerequisites
 
