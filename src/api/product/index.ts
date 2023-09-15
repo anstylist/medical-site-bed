@@ -21,7 +21,7 @@ router.get('/', getAllProductsHandler)
 router.post('/', isAuthenticated, hasRole(['ADMIN']), upload.single('image'), createProductHandler)
 
 // /api/products -> PATCH
-router.patch('/', isAuthenticated, hasRole(['ADMIN']), updateProductHandler)
+router.patch('/:id', isAuthenticated, hasRole(['ADMIN']), upload.single('image'), updateProductHandler)
 
 
 export default router
