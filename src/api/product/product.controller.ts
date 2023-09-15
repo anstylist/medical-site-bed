@@ -3,8 +3,23 @@ import { Request, Response } from 'express'
 import {
   getAllProducts,
   createProduct,
-  updateProduct
+  updateProduct,
+  getProductById
 } from './product.service'
+
+export async function getProductByIdHandler(req: Request, res: Response) {
+  const { id } = req.params
+  try {
+    const product = await getProductById(id)
+    return res.status(200).json(product)
+
+  } catch (error: any) {
+    console.log(error)
+    res.status(404).json({
+      message: error?.message,
+    })
+  }
+}
 
 export const getAllProductsHandler = async (req: Request, res: Response) => {
 

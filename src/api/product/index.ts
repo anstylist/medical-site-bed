@@ -1,6 +1,7 @@
 import { Router } from "express";
 import multer from 'multer';
 import {
+  getProductByIdHandler,
   getAllProductsHandler,
   createProductHandler,
   updateProductHandler
@@ -13,6 +14,9 @@ const upload = multer({
 })
 
 const router = Router()
+
+// /api/products -> GET
+router.get('/:id', getProductByIdHandler)
 
 // /api/products -> GET
 router.get('/', getAllProductsHandler)
