@@ -4,6 +4,14 @@ import { Product } from './product.types'
 
 const prisma = new PrismaClient()
 
+export const getProductById = async (id: string) => {
+  return await prisma.product.findUnique({
+    where: {
+      id
+    }
+  })
+}
+
 export const getAllProducts = async (search?: string) => {
   if (!search) {
     return await prisma.product.findMany()

@@ -44,11 +44,19 @@ model Product {
 
 model Order {
   id        String   @id @default(cuid())
+  name      String?
+  email     String?
   address   String
   city      String
+  state     String?
+  postCode  String?
   phone     String
+  notes     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  paymentMethod String?
+  paymentId String?
+  status    String? @default("pending-for-payment")
 
   user      User           @relation(fields: [userId], references: [id])
   userId    String
