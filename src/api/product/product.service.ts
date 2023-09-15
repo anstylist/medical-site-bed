@@ -106,11 +106,6 @@ export const updateProduct = async (id: string, data: Product, file?: Express.Mu
     data.image = fileResponse.secure_url
   }
 
-  console.log('--- AC: Update Product: ', {
-    id,
-    ...formatData(data),
-  });
-
   try {
     product = await prisma.product.update({
       where: {
