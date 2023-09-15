@@ -1,6 +1,7 @@
 import { Router } from "express";
 import multer from 'multer';
 import {
+  getProductByIdHandler,
   getAllProductsHandler,
   createProductHandler,
   updateProductHandler
@@ -15,13 +16,16 @@ const upload = multer({
 const router = Router()
 
 // /api/products -> GET
+router.get('/:id', getProductByIdHandler)
+
+// /api/products -> GET
 router.get('/', getAllProductsHandler)
 
 // /api/products -> POST
 router.post('/', isAuthenticated, hasRole(['ADMIN']), upload.single('image'), createProductHandler)
 
 // /api/products -> PATCH
-router.patch('/', isAuthenticated, hasRole(['ADMIN']), updateProductHandler)
+router.patch('/:id', isAuthenticated, hasRole(['ADMIN']), upload.single('image'), updateProductHandler)
 
 
 export default router

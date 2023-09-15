@@ -4,16 +4,61 @@ import { Product } from './product.types'
 
 const prisma = new PrismaClient()
 
-export const getAllProducts = async () => {
-  const products = await prisma.product.findMany()
-  return products
+export const getProductById = async (id: string) => {
+  return await prisma.product.findUnique({
+    where: {
+      id
+    }
+  })
+}
+
+export const getAllProducts = async (search?: string) => {
+  if (!search) {
+    return await prisma.product.findMany()
+  }
+
+  return await prisma.product.findMany({
+    where: {
+      OR: [
+        {
+          name: {
+            contains: search,
+            mode: 'insensitive'
+          }
+        },
+        {
+          description: {
+            contains: search,
+            mode: 'insensitive'
+          }
+        },
+        {
+          category: {
+            contains: search,
+            mode: 'insensitive'
+          }
+        },
+        {
+          code: {
+            contains: search,
+            mode: 'insensitive'
+          }
+        }
+      ]
+    },
+    orderBy: {
+      updatedAt: 'desc',
+      createdAt: 'desc'
+    }
+  })
 }
 
 function formatData(data: any) {
   return {
     ...data,
-    price: Number.parseFloat(data?.price),
-    stock: Number.parseInt(data?.stock),
+    image: data?.image || undefined,
+    price: Number.parseFloat(data?.price) || undefined,
+    stock: Number.parseInt(data?.stock) || undefined,
   }
 }
 
@@ -46,7 +91,7 @@ export const createProduct = async (data: Product, file?: Express.Multer.File) =
   return product
 }
 
-export const updateProduct = async (data: Product, file?: Express.Multer.File) => {
+export const updateProduct = async (id: string, data: Product, file?: Express.Multer.File) => {
   let fileResponse = null
   let filePath = file?.path || ''
   let product
@@ -64,7 +109,7 @@ export const updateProduct = async (data: Product, file?: Express.Multer.File) =
   try {
     product = await prisma.product.update({
       where: {
-        id: data.id
+        id
       },
       data: {
         ...formatData(data)

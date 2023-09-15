@@ -3,13 +3,29 @@ import { Request, Response } from 'express'
 import {
   getAllProducts,
   createProduct,
-  updateProduct
+  updateProduct,
+  getProductById
 } from './product.service'
+
+export async function getProductByIdHandler(req: Request, res: Response) {
+  const { id } = req.params
+  try {
+    const product = await getProductById(id)
+    return res.status(200).json(product)
+
+  } catch (error: any) {
+    console.log(error)
+    res.status(404).json({
+      message: error?.message,
+    })
+  }
+}
 
 export const getAllProductsHandler = async (req: Request, res: Response) => {
 
   try {
-    const products = await getAllProducts()
+    const { search } = req.query;
+    const products = await getAllProducts(search as string)
     return res.status(200).json(products)
 
   } catch (error) {
@@ -34,10 +50,9 @@ export async function createProductHandler(req: Request, res: Response) {
 }
 
 export async function updateProductHandler(req: Request, res: Response) {
-  const data = req.body
+  const { id } = req.params
   try {
-
-    const product = await updateProduct(data)
+    const product = await updateProduct(id, req.body, req.file)
     return res.status(200).json({ message: 'Product updated successfully', product })
 
   } catch (error: any) {

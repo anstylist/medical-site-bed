@@ -24,11 +24,6 @@ export default function (directory: string, file: string) {
     }
 
     const filePath = `${appRoot}/${file}`
-
-    console.log('--- AC: ', {
-      appRoot,
-      filePath,
-    });
     
     return cloudinary.uploader
       .upload(filePath, options)

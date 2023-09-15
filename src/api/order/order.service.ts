@@ -32,14 +32,10 @@ export async function getAllOrder() {
   })
 }
 
-export async function createOrder(userId: string, orderData: Order, productsList: any[]) {
+export async function createOrder(user: any, orderData: Order, productsList: any[]) {
   const orderCreate = await prisma.order.create({
     data: {
-      address: orderData.address,
-      city: orderData.city,
-      phone: orderData.phone,
-      countryId: orderData.countryId,
-      userId: userId,
+      ...orderData,
       products: {
         create: productsList
       }
