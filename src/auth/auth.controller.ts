@@ -30,7 +30,12 @@ export const isAuthenticated = async (
 
     const user = await getUserByEmail(decoded.email) as User
 
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
     req.user = user
+    
   } catch (error: any) {
     console.log(error)
 
