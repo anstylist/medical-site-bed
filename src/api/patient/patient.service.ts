@@ -32,39 +32,28 @@ export async function getPatientById(id: string) {
   })
 }
 
-export async function getPatientAppintmentByID(id: string) {
-  const doctorAppointments = await prisma.appointment.findMany({
+export async function getAllPatients() {
+  return prisma.patient.findMany({
     select: {
       id: true,
-      appointmentDataTime: true,
-      hospital: true,
-      reason: true,
-      status: true,
-      patient: {
-        include: {
-          user: {
-            select: {
-              fullName: true,
-              email: true
-            }
-          }
+      rh: true,
+      gender: true,
+      birthDate: true,
+      phone: true,
+      country: {
+        select: {
+          name: true
         }
       },
-      doctor: {
-        include: {
-          user: {
-            select: {
-              fullName: true,
-              email: true
-            }
-          }
-        }
+      user: {
+        select: {
+          fullName: true,
+          email: true,
+          password: true,
+          status: true
+        },
       }
-    },
-    where: {
-      patientId: id
-    },
-  });
+    }
+  })
 
-  return doctorAppointments
 }

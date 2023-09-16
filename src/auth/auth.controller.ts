@@ -14,22 +14,33 @@ export const isAuthenticated = async (
   // Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
   // [Bearer, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9]
   // const token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-  const token = req.headers?.authorization?.split(' ')[1];
+  try {
+    const token = req.headers?.authorization?.split(' ')[1];
 
-  if (!token) {
-    return res.status(401).json({ message: 'Unauthorized' });
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+    // Verify token
+    const decoded = verifyToken(token)
+    //const decoded = { id: '123', email: 'test'}
+
+    if (!decoded) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    const user = await getUserByEmail(decoded.email) as User
+
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    req.user = user
+    
+  } catch (error: any) {
+    console.log(error)
+
+    return res.status(401).json({ message: 'Unauthorized' })
   }
-  // Verify token
-  const decoded = verifyToken(token)
-  //const decoded = { id: '123', email: 'test'}
-
-  if (!decoded) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
-  const user = await getUserByEmail(decoded.email) as User
-
-  req.user = user
   return next();
 }
 
@@ -43,21 +54,28 @@ export const hasRole = (allowRoles: string[]) => {
   ) => {
 
     const user = req.user as any
-    let userRole: string | undefined
+    let userRoles: string[] = []
 
-    if (user.admin) {
-      userRole = 'ADMIN';
-    } else if (user.doctor) {
-      userRole = 'DOCTOR';
-    } else if (user.patient) {
-      userRole = 'PATIENT';
-    }
-
-    if (!userRole) {
+    if (!user) {
       return res.status(403).json({ message: 'Forbidden' });
     }
 
-    const hasPermission = allowRoles.includes(userRole);
+    if (user.admin) {
+      userRoles?.push('ADMIN');
+    }
+    if (user.doctor) {
+      userRoles?.push('DOCTOR');
+    }
+    if (user.patient) {
+      userRoles?.push('PATIENT');
+    }
+
+    if (!userRoles.length) {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
+
+    const hasPermission = userRoles.some(role => allowRoles.includes(role));
+
 
     if (!hasPermission) {
       return res.status(403).json({ message: 'Forbidden' });

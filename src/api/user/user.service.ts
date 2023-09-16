@@ -30,11 +30,11 @@ export async function getAllUser() {
 }
 
 export async function createUser(input: User) {
-
   const hashedPassword = await hashPassword(input.password);
 
   const data = {
     ...input,
+    email: input.email?.toLocaleLowerCase(),
     password: hashedPassword
   }
 
@@ -71,7 +71,7 @@ export async function getUserByEmail(email: string) {
 
   const user = await prisma.user.findUnique({
     where: {
-      email
+      email: email?.toLocaleLowerCase(),
     },
     include: {
       admin: true,
@@ -105,7 +105,7 @@ export async function deleteUser(id: string) {
 export async function updateUser(email: string, data: User) {
   return prisma.user.update({
     where: {
-      email: email,
+      email: email?.toLocaleLowerCase(),
     },
     data
   });

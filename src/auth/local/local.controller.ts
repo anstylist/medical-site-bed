@@ -37,52 +37,20 @@ export async function loginHandler(req: Request, res: Response) {
       fullName: string;
       email: string;
       status: boolean;
-      doctor?: any;
-      admin?: Admin;
-      patient?: Patient
+      roles: string[]
     };
+
+    const roles = []
+    if (user.admin) roles.push('ADMIN')
+    if (user.patient) roles.push('PATIENT')
+    if (user.doctor) roles.push('DOCTOR')
+    if (!roles.length) roles.push('USER')
 
     const profile: Profile = {
       fullName: user.fullName,
       email: user.email,
-      status: user.status
-    }
-
-    if (user.admin) {
-      profile.admin = user.admin;
-    }
-    else if (user.doctor) {
-      profile.doctor = {
-        image: user.doctor.image,
-        phone: user.doctor.phone,
-        socialLinks: [
-          {
-            "type": "facebook",
-            "url": user.doctor.facebook,
-          },
-          {
-            "type": "instagram",
-            "url": user.doctor.instagram
-          },
-          {
-            "type": "twitter",
-            "url": user.doctor.twitter
-          },
-          {
-            "type": "linkedin",
-            "url": user.doctor.linkedin
-          }
-        ],
-        specialities: [] =
-          user.doctor.specialities.map((item) => {
-            return item.speciality.name
-          })
-        ,
-        appointments: [] = user.doctor.appointments
-      }
-    }
-    else if (user.patient) {
-      profile.patient = user.patient;
+      status: user.status,
+      roles
     }
 
     return res.status(200).json({ token, profile })
@@ -93,7 +61,6 @@ export async function loginHandler(req: Request, res: Response) {
 export async function forgotPasswordHandler(req: Request, res: Response) {
 
   const { email } = req.body
-  console.log(email)
 
   try {
     const user = await getUserByEmail(email)
@@ -109,9 +76,8 @@ export async function forgotPasswordHandler(req: Request, res: Response) {
       forgotPasswordTime: new Date()
     }
 
-    await updateUserForgotPassword(user, data)
-
-    return res.status(200).json({ message: `An email with a link to reset your password was already sent` })
+   const updatedUser = await updateUserForgotPassword(user, data)
+  return res.status(200).json({ message: "Reset link sent to email", token, fullName: user.fullName });
 
   } catch (error) {
     return res.status(500).json({ error })
@@ -121,9 +87,10 @@ export async function forgotPasswordHandler(req: Request, res: Response) {
 
 
 export async function resetPasswordHandler(req: Request, res: Response) {
-
-  const { token = "" }: { token?: string } = req.query;
+  
+  const { token = "" }: { token?: string } = req.params;
   const { newPassword } = req.body
+  
 
   if (!token) {
     return res.status(404).json({ message: "User not found" });
@@ -147,7 +114,7 @@ export async function resetPasswordHandler(req: Request, res: Response) {
         forgotPasswordTime: null
       }
 
-      await updateUser(data.id, data)
+      await updateUser(user.email, data)
       return res.status(200).json({ message: "Your password has been changed successfully" });
     }
 

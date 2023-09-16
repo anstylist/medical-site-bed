@@ -10,7 +10,9 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "fullName" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "status" BOOLEAN NOT NULL DEFAULT false,
+    "forgotPasswordToken" TEXT,
+    "forgotPasswordTime" TIMESTAMP(3),
+    "status" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -22,10 +24,10 @@ CREATE TABLE "Product" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "code" TEXT NOT NULL,
+    "code" TEXT,
     "image" TEXT NOT NULL,
     "category" TEXT NOT NULL,
-    "price" INTEGER NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
     "stock" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -36,11 +38,19 @@ CREATE TABLE "Product" (
 -- CreateTable
 CREATE TABLE "Order" (
     "id" TEXT NOT NULL,
+    "name" TEXT,
+    "email" TEXT,
     "address" TEXT NOT NULL,
     "city" TEXT NOT NULL,
+    "state" TEXT,
+    "postCode" TEXT,
     "phone" TEXT NOT NULL,
+    "notes" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "paymentMethod" TEXT,
+    "paymentId" TEXT,
+    "status" TEXT DEFAULT 'pending-for-payment',
     "userId" TEXT NOT NULL,
     "countryId" TEXT NOT NULL,
 
@@ -86,6 +96,7 @@ CREATE TABLE "Appointment" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "patientId" TEXT NOT NULL,
     "doctorId" TEXT NOT NULL,
+    "specialityId" TEXT NOT NULL,
 
     CONSTRAINT "Appointment_pkey" PRIMARY KEY ("id")
 );
@@ -95,6 +106,10 @@ CREATE TABLE "Doctor" (
     "id" TEXT NOT NULL,
     "image" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
+    "facebook" TEXT,
+    "twitter" TEXT,
+    "linkedin" TEXT,
+    "instagram" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "userId" TEXT NOT NULL,
@@ -147,10 +162,19 @@ CREATE TABLE "Admin" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_forgotPasswordToken_key" ON "User"("forgotPasswordToken");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Product_name_key" ON "Product"("name");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Patient_userId_key" ON "Patient"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Doctor_userId_key" ON "Doctor"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Speciality_name_key" ON "Speciality"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Admin_userId_key" ON "Admin"("userId");
@@ -178,6 +202,9 @@ ALTER TABLE "Appointment" ADD CONSTRAINT "Appointment_patientId_fkey" FOREIGN KE
 
 -- AddForeignKey
 ALTER TABLE "Appointment" ADD CONSTRAINT "Appointment_doctorId_fkey" FOREIGN KEY ("doctorId") REFERENCES "Doctor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Appointment" ADD CONSTRAINT "Appointment_specialityId_fkey" FOREIGN KEY ("specialityId") REFERENCES "Speciality"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Doctor" ADD CONSTRAINT "Doctor_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
