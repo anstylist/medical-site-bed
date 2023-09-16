@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node dist/app.js",
     "dev": "ts-node-dev --respawn src/app.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "prisma:migrations": "prisma migrate dev",
+    "prisma:generate": "prisma generate"
   },
   "keywords": [],
   "author": "",
