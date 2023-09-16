@@ -46,10 +46,14 @@ export const getAllProducts = async (search?: string) => {
         }
       ]
     },
-    orderBy: {
-      updatedAt: 'desc',
-      createdAt: 'desc'
-    }
+    orderBy: [
+      {
+        updatedAt: 'desc',
+      },
+      {
+        createdAt: 'desc'
+      }
+    ]
   })
 }
 
