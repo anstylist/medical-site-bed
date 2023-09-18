@@ -8,6 +8,6 @@ const router = Router()
 router.post('/', isAuthenticated, createOrderHandler);
 
 // /api/orders -> GET
-router.get('/', isAuthenticated, hasRole(['ADMIN']), getAllOrderHandler);
+router.get('/all', isAuthenticated, hasRole(['ADMIN']), getAllOrderHandler);
 
 export default router
