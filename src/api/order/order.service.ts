@@ -6,26 +6,39 @@ const prisma = new PrismaClient();
 
 export async function getAllOrder() {
   return await prisma.order.findMany({
-    include: {
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      address: true,
+      city: true,
+      state: true,
+      postCode: true,
+      phone: true,
+      notes: true,
+      paymentMethod: true,
+      status: true,
+      createdAt: true,
+      user: {
+        select: {
+          fullName: true,
+          email: true
+        }
+      },
       products: {
         select: {
-          price: true,
           quantity: true,
+          price: true,
           product: {
             select: {
               name: true,
               description: true,
               code: true,
               image: true,
-              category: true
+              category: true,
+              price: true
             }
           }
-        }
-      },
-      user: {
-        select: {
-          fullName: true,
-          email: true
         }
       }
     }
