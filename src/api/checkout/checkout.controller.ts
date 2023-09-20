@@ -44,7 +44,7 @@ export const checkoutHandler = async (req: OptionRequest, res: Response) => {
     });
   } catch (error: any) {
     console.log(error)
-    res.status(500).send({
+    res.status(400).send({
       message: error.message
     })
   }
