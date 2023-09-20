@@ -10,11 +10,11 @@ export async function createOrderHandler(req: OptionRequest, res: Response) {
 
   try {
     if (!user?.id) {
-      res.status(500).json({ mesaage: 'User not found' })
+      res.status(401).json({ message: 'User not found' })
     }
 
     const order = await createOrder(user.id, orderData, productsList)
-    res.status(200).json({ mesage: 'Order Created', order })
+    res.status(200).json({ message: 'Order Created', order })
 
   } catch (error) {
     res.status(404).json({ error })
